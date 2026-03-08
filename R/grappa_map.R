@@ -9,16 +9,32 @@
 #' - stops if validation errors are found
 #' - maps only rows where \code{map_valid == TRUE}
 #' - allows interactive filtering by player directly on the map
+#' - saves the map as an HTML file
+#' - opens the HTML file automatically in the default browser
 #'
 #' @param cluster Logical; if TRUE, marker clustering is enabled.
 #' @param warn Logical; if TRUE, warnings from validation are printed.
+#' @param file Optional character string. Path of the HTML file to create.
+#'   If NULL, a temporary HTML file is created.
+#' @param selfcontained Logical; if TRUE, saves a self-contained HTML widget.
 #'
-#' @return A \code{leaflet} map widget.
+#' @return Invisibly returns a list with:
+#' \describe{
+#'   \item{map}{The leaflet map widget.}
+#'   \item{file}{The path to the generated HTML file.}
+#' }
 #' @export
-grappa_map <- function(cluster = TRUE, warn = TRUE) {
+grappa_map <- function(cluster = TRUE,
+                       warn = TRUE,
+                       file = NULL,
+                       selfcontained = TRUE) {
 
   if (!requireNamespace("leaflet", quietly = TRUE)) {
     stop("Package 'leaflet' is required but not installed.", call. = FALSE)
+  }
+
+  if (!requireNamespace("htmlwidgets", quietly = TRUE)) {
+    stop("Package 'htmlwidgets' is required but not installed.", call. = FALSE)
   }
 
   df <- grappa_data()
@@ -52,7 +68,6 @@ grappa_map <- function(cluster = TRUE, warn = TRUE) {
     stop("No valid coordinates available to build the map.", call. = FALSE)
   }
 
-  # Ensure player is character and replace missing values if needed
   map_df$player <- as.character(map_df$player)
   map_df$player[is.na(map_df$player) | !nzchar(map_df$player)] <- "Unknown"
 
@@ -142,5 +157,22 @@ grappa_map <- function(cluster = TRUE, warn = TRUE) {
       options = leaflet::layersControlOptions(collapsed = FALSE)
     )
 
-  return(m)
+  if (is.null(file)) {
+    file <- tempfile(pattern = "grappa_map_", fileext = ".html")
+  } else {
+    file <- normalizePath(file, winslash = "/", mustWork = FALSE)
+  }
+
+  htmlwidgets::saveWidget(
+    widget = m,
+    file = file,
+    selfcontained = selfcontained
+  )
+
+  utils::browseURL(file)
+
+  invisible(list(
+    map = m,
+    file = file
+  ))
 }

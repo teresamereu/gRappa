@@ -4,15 +4,24 @@
 \alias{grappa_map}
 \title{Create an interactive map of grappa locations}
 \usage{
-grappa_map(cluster = TRUE, warn = TRUE)
+grappa_map(cluster = TRUE, warn = TRUE, file = NULL, selfcontained = TRUE)
 }
 \arguments{
 \item{cluster}{Logical; if TRUE, marker clustering is enabled.}
 
 \item{warn}{Logical; if TRUE, warnings from validation are printed.}
+
+\item{file}{Optional character string. Path of the HTML file to create.
+If NULL, a temporary HTML file is created.}
+
+\item{selfcontained}{Logical; if TRUE, saves a self-contained HTML widget.}
 }
 \value{
-A \code{leaflet} map widget.
+Invisibly returns a list with:
+\describe{
+\item{map}{The leaflet map widget.}
+\item{file}{The path to the generated HTML file.}
+}
 }
 \description{
 Builds an interactive world map of valid grappa drinking locations
@@ -26,5 +35,7 @@ The function:
 \item stops if validation errors are found
 \item maps only rows where \code{map_valid == TRUE}
 \item allows interactive filtering by player directly on the map
+\item saves the map as an HTML file
+\item opens the HTML file automatically in the default browser
 }
 }
