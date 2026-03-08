@@ -2,26 +2,17 @@ Package: gRappa
 Title: A Playful R Package for Grappa Maps, Icons, and Media
 Version: 0.1.0
 Authors@R: 
-<<<<<<< HEAD
-    person("Andrea", "Bianco", , "andrea.bianco00.ab@gmail.com", role = c("aut", "cre"))
-=======
     person("Andrea", "Bianco", email = "andrea.bianco00.ab@gmail.com", role = c("aut", "cre"))
->>>>>>> 40bbbcf (Fix package structure, dependencies and license)
 Description: A playful R package for grappa-related utilities, including
     interactive maps of grappa locations, icon visualization tools,
-    dataset helpers, and other multimedia functions.
+    dataset helpers, and multimedia functions.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
     leaflet,
-<<<<<<< HEAD
     png
-=======
-    png,
-    stats
->>>>>>> 40bbbcf (Fix package structure, dependencies and license)
 Suggests:
     knitr,
     rmarkdown
