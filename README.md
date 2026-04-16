@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="inst/extdata/icons/grappass.png" width="250">
+  <img src="https://raw.githubusercontent.com/andrea-bianco00/gRappa/main/inst/extdata/icons/grappass.png" width="300">
 </p>
 
 # gRappa
